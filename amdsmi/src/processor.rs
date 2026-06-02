@@ -2,10 +2,12 @@ use std::sync::Arc;
 
 use amdsmi_sys::{
     AMDSMI_GPU_UUID_SIZE, amdsmi_board_info_t, amdsmi_memory_type_t, amdsmi_power_info_t,
-    amdsmi_proc_info_t, amdsmi_processor_handle,
+    amdsmi_proc_info_t, amdsmi_processor_handle, amdsmi_status_t,
 };
 
-use crate::{AmdSmiInner, Result, amdsmi_unsafe, types::EnergyCount};
+use crate::{
+    AmdSmiInner, Result, amdsmi_unsafe, error::AmdSmiError::AmdSmiError, types::EnergyCount,
+};
 
 #[derive(Debug, Clone)]
 pub struct Processor {
@@ -79,6 +81,9 @@ impl Processor {
     pub fn get_power(&self) -> Result<u32> {
         let mut info: amdsmi_power_info_t = unsafe { std::mem::zeroed() };
         amdsmi_unsafe!(self.amdsmi.lib.amdsmi_get_power_info(self.inner, &mut info))?;
+        if info.average_socket_power == u32::MAX {
+            return Err(AmdSmiError(amdsmi_status_t::AMDSMI_STATUS_NOT_SUPPORTED));
+        }
         Ok(info.average_socket_power)
     }
 

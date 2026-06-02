@@ -2,7 +2,7 @@ use crate::error::AmdSmiError;
 
 pub(crate) type Result<T> = std::result::Result<T, AmdSmiError>;
 
-#[derive(Debug)]
+#[derive(Debug, Clone, Copy)]
 pub struct EnergyCount {
     pub energy_accumulator: u64,
     pub counter_resolution: f32,
