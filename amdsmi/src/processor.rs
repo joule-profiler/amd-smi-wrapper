@@ -1,12 +1,14 @@
 use std::sync::Arc;
 
 use amdsmi_sys::{
-    AMDSMI_GPU_UUID_SIZE, amdsmi_board_info_t, amdsmi_memory_type_t, amdsmi_power_info_t,
-    amdsmi_proc_info_t, amdsmi_processor_handle, amdsmi_status_t,
+    AMDSMI_GPU_UUID_SIZE, amdsmi_board_info_t, amdsmi_engine_usage_t, amdsmi_memory_type_t,
+    amdsmi_power_info_t, amdsmi_proc_info_t, amdsmi_processor_handle, amdsmi_status_t,
 };
 
 use crate::{
-    AmdSmiInner, Result, amdsmi_unsafe, error::AmdSmiError::AmdSmiError, types::EnergyCount,
+    AmdSmiInner, Result, amdsmi_unsafe,
+    error::AmdSmiError::AmdSmiError,
+    types::{EnergyCount, GpuUsageInfo},
 };
 
 #[derive(Debug, Clone)]
@@ -107,6 +109,20 @@ impl Processor {
         processes.truncate(nb_processes as usize);
 
         Ok(processes)
+    }
+
+    pub fn get_gpu_activity(&self) -> Result<GpuUsageInfo> {
+        let mut info: amdsmi_engine_usage_t = unsafe { std::mem::zeroed() };
+        amdsmi_unsafe!(
+            self.amdsmi
+                .lib
+                .amdsmi_get_gpu_activity(self.inner, &mut info,)
+        )?;
+
+        Ok(GpuUsageInfo {
+            gpu_usage: info.gfx_activity,
+            mem_usage: info.umc_activity,
+        })
     }
 }
 

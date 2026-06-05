@@ -89,7 +89,10 @@ fn generate_amdsmi_bindings(amdsmi_header_file: &str) {
     let bindings = bindgen::Builder::default()
         .header(amdsmi_header_file)
         .raw_line(format!("// Auto-generated for amd-smi-lib v{}", version))
-        .raw_line(format!("pub const AMDSMI_BINDINGS_VERSION: &str = \"{}\";", version))
+        .raw_line(format!(
+            "pub const AMDSMI_BINDINGS_VERSION: &str = \"{}\";",
+            version
+        ))
         .generate_comments(false)
         .prepend_enum_name(false)
         .rustified_enum("^(.*)$")

@@ -17,6 +17,7 @@ const ALLOWLIST_STRUCTS: &[&str] = allowlist![
     amdsmi_init_flags_t,
     amdsmi_memory_type_t,
     amdsmi_process_info_t,
+    amdsmi_engine_usage_t,
 ];
 
 const ALLOWLIST_FUNCTIONS: &[&str] = allowlist![
@@ -34,6 +35,7 @@ const ALLOWLIST_FUNCTIONS: &[&str] = allowlist![
     amdsmi_get_gpu_process_list,
     amdsmi_get_lib_version,
     amdsmi_get_power_info,
+    amdsmi_get_gpu_activity,
 ];
 
 const ALLOWLIST_CONSTANTS: &[&str] = allowlist![AMDSMI_MAX_STRING_LENGTH, AMDSMI_GPU_UUID_SIZE];
