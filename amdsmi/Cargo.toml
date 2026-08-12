@@ -1,7 +1,11 @@
 [package]
 name = "amdsmi"
 version = "0.1.0"
-edition = "2024"
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+repository.workspace = true
+description = "Rust bindings for AMD System Management Interface (AMDSMI)"
 
 [dependencies]
 libloading.workspace = true

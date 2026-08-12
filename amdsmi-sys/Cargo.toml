@@ -1,8 +1,12 @@
 [package]
 name = "amdsmi-sys"
 version = "0.1.0"
-edition = "2024"
 links = "amdsmi"
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+repository.workspace = true
+description = "Rust FFI bindings for AMD System Management Interface (AMDSMI)"
 
 [dependencies]
 libloading.workspace = true

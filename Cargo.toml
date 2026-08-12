@@ -5,5 +5,12 @@ members = [
     "amdsmi",
 ]
 
+[workspace.package]
+edition = "2024"
+authors = ["François Gibier <francoisgibier.contact@gmail.com>"]
+license = "MIT"
+repository = "https://github.com/joule-profiler/amd-smi-wrapper"
+readme = "README.md"
+
 [workspace.dependencies]
 libloading = "0.8.0"
